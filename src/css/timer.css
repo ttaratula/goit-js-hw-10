@@ -1,0 +1,40 @@
+#datetime-picker {
+  width: 200px;
+  padding: 5px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+#datetime-picker:focus {
+  border-color: #007bff;
+}
+
+.inputandbutton{
+  display: flex;
+}
+
+button[data-start] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+button[data-start]:hover {
+  background-color: #0056b3;
+}
+
+button[data-start]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

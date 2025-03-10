@@ -19,16 +19,25 @@
     </main>
     <script type="module" src="./js/2-snackbar.js"></script>
 
-    <form class="feedback-form" autocomplete="off">
+    <form class="form">
       <label>
-        Email
-        <input type="email" name="email" autofocus />
+        Delay (ms)
+        <input type="number" name="delay" class="input" />
       </label>
-      <label>
-        Message
-        <textarea name="message" rows="8"></textarea>
-      </label>
-      <button type="submit">Submit</button>
+    
+          <fieldset class="fieldset">
+        <legend >State</legend>
+        <label class="label">
+          <input  type="radio" name="state" value="fulfilled" />
+          Fulfilled
+        </label>
+        <label>
+          <input type="radio" name="state" value="rejected" required />
+          Rejected
+        </label>
+      </fieldset>
+    
+      <button type="submit">Create notification</button>
     </form>
     
   </body>

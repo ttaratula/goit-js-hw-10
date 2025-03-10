@@ -1,53 +1,54 @@
-const STORAGE_KEY = "feedback-form-state";
+// Описаний у документації
+import iziToast from "izitoast";
+// Додатковий імпорт стилів
+import "izitoast/dist/css/iziToast.min.css";
 
-let formData = { email: "", message: "" };
+// Отримуємо елементи форми
+const form = document.querySelector('.form');
+const delayInput = form.querySelector('input[name="delay"]');
+const stateRadios = form.querySelectorAll('input[name="state"]');
 
-const form = document.querySelector(".feedback-form");
-const emailInput = form.querySelector("input[type='email']");
-const textarea = form.querySelector("textarea");
-
-
-populateForm();
-
-form.addEventListener("submit", onFormSubmit);
-form.addEventListener("input", onFormInput);
-
-function onFormSubmit(event) {
-    event.preventDefault();
-    
-    if (!formData.email.trim() || !formData.message.trim()) {
-        alert("Fill please all fields");
-        return;
-    }
-    
-    console.log(formData); 
-
-    localStorage.removeItem(STORAGE_KEY);
-    form.reset();
-
-    formData = { email: "", message: "" };
+// Функція для створення промісу
+function createPromise(delay, state) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (state === 'fulfilled') {
+                resolve(delay);
+            } else {
+                reject(delay);
+            }
+        }, delay);
+    });
 }
 
-function onFormInput() {
-    formData.email = emailInput.value.trim();
-    formData.message = textarea.value.trim();
+// Обробник сабміту форми
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Запобігаємо перезавантаженню сторінки
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-}
+    const delay = parseInt(delayInput.value);
+    const state = [...stateRadios].find(radio => radio.checked)?.value;
 
-function populateForm() {
-    const savedData = localStorage.getItem(STORAGE_KEY);
-    
-    if (!savedData) {
-        return;
+    if (isNaN(delay) || !state) {
+        return; // Якщо немає значення delay або вибраного стану, нічого не робимо
     }
 
-    formData = JSON.parse(savedData); 
-    emailInput.value = formData.email || "";
-    textarea.value = formData.message || "";
-}
+    const promise = createPromise(delay, state);
 
-
-
-
-
+    promise
+        .then((resolvedDelay) => {
+            // Якщо проміс виконано успішно
+            iziToast.success({
+                title: 'Success',
+                message: `✅ Fulfilled promise in ${resolvedDelay}ms`,
+                position: 'topRight',
+            });
+        })
+        .catch((rejectedDelay) => {
+            // Якщо проміс відхилено
+            iziToast.error({
+                title: 'Error',
+                message: `❌ Rejected promise in ${rejectedDelay}ms`,
+                position: 'topRight',
+            });
+        });
+});

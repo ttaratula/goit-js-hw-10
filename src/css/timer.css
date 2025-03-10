@@ -7,7 +7,7 @@
   text-align: center;
   outline: none;
   cursor: pointer;
-  transition: border-color 0.3s;
+  
 }
 
 #datetime-picker:focus {
@@ -37,4 +37,32 @@ button[data-start]:hover {
 button[data-start]:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.timer {
+  display: flex;
+  margin-top: 20px;
+}
+
+.field {
+  margin: 0 10px;
+  text-align: center;
+}
+
+.value {
+  font-size: 30px;
+  
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  color: gray;
 }
